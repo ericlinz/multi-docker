@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t lc13lc13/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run lc13lc13/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t lc13lc13/multi-client ./client
+  - docker build -t lc13lc13/multi-nginx ./nginx
+  - docker build -t lc13lc13/multi-server ./server
+  - docker build -t lc13lc13/multi-worker ./worker
+# Login to docer CLI in a single command
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push -t lc13lc13/multi-client
+  - docker push -t lc13lc13/multi-nginx
+  - docker push -t lc13lc13/multi-server
+  - docker push -t lc13lc13/multi-worker
+
