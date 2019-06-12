@@ -15,8 +15,8 @@ after_success:
   - docker build -t lc13lc13/multi-worker ./worker
 # Login to docer CLI in a single command
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push -t lc13lc13/multi-client
-  - docker push -t lc13lc13/multi-nginx
-  - docker push -t lc13lc13/multi-server
-  - docker push -t lc13lc13/multi-worker
+  - docker push lc13lc13/multi-client
+  - docker push lc13lc13/multi-nginx
+  - docker push lc13lc13/multi-server
+  - docker push lc13lc13/multi-worker
 
